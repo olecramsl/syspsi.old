@@ -1,7 +1,11 @@
 package com.marcelo.syspsi.domain;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,6 +24,10 @@ public abstract class Pessoa implements Serializable {
 	private String nome;
 	private String email;
 	
+	@ElementCollection
+	@CollectionTable(name = "TELEFONE")
+	private Set<String> telefones = new HashSet<>();	
+
 	public Pessoa() {		
 	}
 
@@ -54,6 +62,14 @@ public abstract class Pessoa implements Serializable {
 		this.email = email;
 	}
 
+	public Set<String> getTelefones() {
+		return telefones;
+	}
+
+	public void setTelefones(Set<String> telefone) {
+		this.telefones = telefone;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
