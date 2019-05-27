@@ -1,12 +1,19 @@
 package com.marcelo.syspsi.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Psicologo extends Pessoa {
 	private static final long serialVersionUID = 1L;
 	
 	private String crp;
+	
+	@OneToMany(mappedBy = "psicologo")	
+	private List<Atendimento> atendimentos = new ArrayList<>();
 			
 	public Psicologo() {		
 	}

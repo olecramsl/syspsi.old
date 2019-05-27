@@ -8,9 +8,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.marcelo.syspsi.domain.Atendimento;
 import com.marcelo.syspsi.domain.Endereco;
 import com.marcelo.syspsi.domain.Paciente;
 import com.marcelo.syspsi.domain.Psicologo;
+import com.marcelo.syspsi.repositories.AtendimentoRepository;
 import com.marcelo.syspsi.repositories.EnderecoRepository;
 import com.marcelo.syspsi.repositories.PacienteRepository;
 import com.marcelo.syspsi.repositories.PsicologoRepository;
@@ -26,6 +28,9 @@ public class SyspsiApplication implements CommandLineRunner {
 	
 	@Autowired
 	private PsicologoRepository psicologoRepository;
+	
+	@Autowired
+	private AtendimentoRepository atendimentoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(SyspsiApplication.class, args);
@@ -56,6 +61,12 @@ public class SyspsiApplication implements CommandLineRunner {
 		psi1.getEnderecos().addAll(Arrays.asList(end3, end4));
 		
 		psicologoRepository.saveAll(Arrays.asList(psi1));
+		
+		Atendimento ated1 = new Atendimento(null, sdf.parse("20/05/2019 10:30"), "Sessão iniciada com sucesso", 80.00, psi1, pac1, end4);
+		Atendimento ated2 = new Atendimento(null, sdf.parse("21/05/2019 15:45"), "Promessa de ascenção", 120.00, psi1, pac1, end3);
+		Atendimento ated3 = new Atendimento(null, sdf.parse("22/05/2019 09:10"), "Comprometimento e responsabilidade", 230.00, psi1, pac2, end4);
+		
+		atendimentoRepository.saveAll(Arrays.asList(ated1, ated2, ated3));
 		
 	}
 }

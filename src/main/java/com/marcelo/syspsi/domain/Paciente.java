@@ -1,8 +1,11 @@
 package com.marcelo.syspsi.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -13,13 +16,16 @@ public class Paciente extends Pessoa {
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataNascimento;
 	
+	@OneToMany(mappedBy = "paciente")	
+	List<Atendimento> consultas = new ArrayList<>();
+	
 	public Paciente() {		
 	}
 
 	public Paciente(Integer id, String nome, String email, String cpf, Date dataNascimento) {
 		super(id, nome, email, cpf);
 		this.dataNascimento = dataNascimento;		
-	}
+	}	
 
 	public Date getDataNascimento() {
 		return dataNascimento;
@@ -28,4 +34,13 @@ public class Paciente extends Pessoa {
 	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
+	
+	public List<Atendimento> getConsultas() {
+		return consultas;
+	}
+
+	public void setConsultas(List<Atendimento> consultas) {
+		this.consultas = consultas;
+	}
+		
 }
