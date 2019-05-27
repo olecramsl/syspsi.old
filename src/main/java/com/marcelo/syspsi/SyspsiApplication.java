@@ -32,12 +32,12 @@ public class SyspsiApplication implements CommandLineRunner {
 	@Autowired
 	private AtendimentoRepository atendimentoRepository;
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) {		
 		SpringApplication.run(SyspsiApplication.class, args);
 	}
 	
 	@Override
-	public void run(String... args) throws Exception {
+	public void run(String... args) throws Exception {			
 		Endereco end1 = new Endereco(null, "Acesso H", "3813", null, "Restinga", "91787-878", "Porto Alegre", "RS");
 		Endereco end2 = new Endereco(null, "Vicente", "95", "Casa 20", "Praia de Belas", "90110-200", "Porto Alegre", "RS");
 		Endereco end3 = new Endereco(null, "Wenceslau", "1544", "Sala 2", "Tristeza", "92345-999", "Porto Alegre", "RS");
@@ -46,6 +46,7 @@ public class SyspsiApplication implements CommandLineRunner {
 		enderecoRepository.saveAll(Arrays.asList(end1, end2, end3, end4));
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		
 		Paciente pac1 = new Paciente(null, "Carla Mello", "carla@gmail.com", "11111111111", sdf.parse("10/04/1982"));
 		Paciente pac2 = new Paciente(null, "Marcos Silva", "marcos@gmail.com", "22222222222", sdf.parse("23/08/1994"));
 		
@@ -62,9 +63,11 @@ public class SyspsiApplication implements CommandLineRunner {
 		
 		psicologoRepository.saveAll(Arrays.asList(psi1));
 		
-		Atendimento ated1 = new Atendimento(null, sdf.parse("20/05/2019 10:30"), "Sessão iniciada com sucesso", 80.00, psi1, pac1, end4);
-		Atendimento ated2 = new Atendimento(null, sdf.parse("21/05/2019 15:45"), "Promessa de ascenção", 120.00, psi1, pac1, end3);
-		Atendimento ated3 = new Atendimento(null, sdf.parse("22/05/2019 09:10"), "Comprometimento e responsabilidade", 230.00, psi1, pac2, end4);
+		SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		
+		Atendimento ated1 = new Atendimento(null, sdf1.parse("20/05/2019 10:30"), "Sessão iniciada com sucesso", 80.00, psi1, pac1, end4);
+		Atendimento ated2 = new Atendimento(null, sdf1.parse("21/05/2019 15:45"), "Promessa de ascenção", 120.00, psi1, pac1, end3);
+		Atendimento ated3 = new Atendimento(null, sdf1.parse("22/05/2019 09:10"), "Comprometimento e responsabilidade", 230.00, psi1, pac2, end4);
 		
 		atendimentoRepository.saveAll(Arrays.asList(ated1, ated2, ated3));
 		
