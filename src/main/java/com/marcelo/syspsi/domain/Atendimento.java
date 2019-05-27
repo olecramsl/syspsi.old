@@ -1,7 +1,9 @@
 package com.marcelo.syspsi.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -39,6 +42,10 @@ public class Atendimento implements Serializable {
 	@JoinColumn(name = "endereco_atendimento_id")
 	private Endereco enderecoDoAtendimento;
 	
+	@OneToMany
+	@JoinColumn(name = "despesa_id")
+	private List<Despesa> despesas = new ArrayList<>();	
+
 	public Atendimento() {		
 	}
 
@@ -108,6 +115,14 @@ public class Atendimento implements Serializable {
 
 	public void setEnderecoDoAtendimento(Endereco enderecoDoAtendimento) {
 		this.enderecoDoAtendimento = enderecoDoAtendimento;
+	}
+	
+	public List<Despesa> getDespesas() {
+		return despesas;
+	}
+
+	public void setDespesas(List<Despesa> despesas) {
+		this.despesas = despesas;
 	}
 
 	@Override

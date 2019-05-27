@@ -9,10 +9,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.marcelo.syspsi.domain.Atendimento;
+import com.marcelo.syspsi.domain.Despesa;
 import com.marcelo.syspsi.domain.Endereco;
 import com.marcelo.syspsi.domain.Paciente;
 import com.marcelo.syspsi.domain.Psicologo;
+import com.marcelo.syspsi.domain.enums.TipoDespesa;
 import com.marcelo.syspsi.repositories.AtendimentoRepository;
+import com.marcelo.syspsi.repositories.DespesaRepository;
 import com.marcelo.syspsi.repositories.EnderecoRepository;
 import com.marcelo.syspsi.repositories.PacienteRepository;
 import com.marcelo.syspsi.repositories.PsicologoRepository;
@@ -31,6 +34,9 @@ public class SyspsiApplication implements CommandLineRunner {
 	
 	@Autowired
 	private AtendimentoRepository atendimentoRepository;
+	
+	@Autowired
+	private DespesaRepository despesaRepository;
 	
 	public static void main(String[] args) {		
 		SpringApplication.run(SyspsiApplication.class, args);
@@ -63,13 +69,22 @@ public class SyspsiApplication implements CommandLineRunner {
 		
 		psicologoRepository.saveAll(Arrays.asList(psi1));
 		
+		Despesa desp1 = new Despesa(null, TipoDespesa.AUGUELSALA, 20.00, sdf.parse("20/05/2019"));
+		Despesa desp2 = new Despesa(null, TipoDespesa.TRANSPORTE, 15.00, sdf.parse("20/05/2019"));
+		Despesa desp3 = new Despesa(null, TipoDespesa.OUTRAS, 50.00, sdf.parse("22/05/2019"));
+		
+		despesaRepository.saveAll(Arrays.asList(desp1, desp2, desp3));
+		
 		SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		
 		Atendimento ated1 = new Atendimento(null, sdf1.parse("20/05/2019 10:30"), "Sessão iniciada com sucesso", 80.00, psi1, pac1, end4);
 		Atendimento ated2 = new Atendimento(null, sdf1.parse("21/05/2019 15:45"), "Promessa de ascenção", 120.00, psi1, pac1, end3);
 		Atendimento ated3 = new Atendimento(null, sdf1.parse("22/05/2019 09:10"), "Comprometimento e responsabilidade", 230.00, psi1, pac2, end4);
 		
-		atendimentoRepository.saveAll(Arrays.asList(ated1, ated2, ated3));
+		ated1.getDespesas().addAll(Arrays.asList(desp1, desp2));
+		ated3.getDespesas().addAll(Arrays.asList(desp3));
+		
+		atendimentoRepository.saveAll(Arrays.asList(ated1, ated2, ated3));			
 		
 	}
 }
