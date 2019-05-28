@@ -1,14 +1,11 @@
 package com.marcelo.syspsi.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 @Entity
 public class Endereco implements Serializable {		
@@ -24,9 +21,6 @@ public class Endereco implements Serializable {
 	private String cep;
 	private String cidade;
 	private String estado;
-	
-	@OneToMany(mappedBy = "endereco")
-	private List<Paciente> pacientes = new ArrayList<>();
 	
 	public Endereco() {		
 	}	

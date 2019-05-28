@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -43,7 +44,9 @@ public class Atendimento implements Serializable {
 	private Endereco enderecoDoAtendimento;
 	
 	@OneToMany
-	@JoinColumn(name = "despesa_id")
+	@JoinTable(name="despesas_atendimento", joinColumns=
+	{@JoinColumn(name="atendimento_id")}, inverseJoinColumns=
+ 	 {@JoinColumn(name="despesa_id")})
 	private List<Despesa> despesas = new ArrayList<>();	
 
 	public Atendimento() {		

@@ -19,7 +19,7 @@ public class Paciente extends Pessoa {
 	private Date dataNascimento;
 	
 	@OneToMany(mappedBy = "paciente")	
-	List<Atendimento> consultas = new ArrayList<>();
+	private List<Atendimento> consultas = new ArrayList<>();
 	
 	@ManyToOne
 	@JoinColumn(name = "endereco_id")
