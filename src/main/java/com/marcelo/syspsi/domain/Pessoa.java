@@ -1,9 +1,7 @@
 package com.marcelo.syspsi.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CollectionTable;
@@ -14,8 +12,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
@@ -29,10 +25,6 @@ public abstract class Pessoa implements Serializable {
 	private String email;
 	private String cpf;	
 	
-	@OneToMany
-	@JoinColumn(name = "pessoa_id")	
-	List<Endereco> enderecos = new ArrayList<>();	
-
 	@ElementCollection
 	@CollectionTable(name = "TELEFONE")
 	private Set<String> telefones = new HashSet<>();	
@@ -87,14 +79,6 @@ public abstract class Pessoa implements Serializable {
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}	
-	
-	public List<Endereco> getEnderecos() {
-		return enderecos;
-	}
-
-	public void setEnderecos(List<Endereco> enderecos) {
-		this.enderecos = enderecos;
-	}
 	
 	@Override
 	public int hashCode() {

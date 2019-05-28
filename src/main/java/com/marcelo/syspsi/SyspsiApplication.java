@@ -53,38 +53,41 @@ public class SyspsiApplication implements CommandLineRunner {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
-		Paciente pac1 = new Paciente(null, "Carla Mello", "carla@gmail.com", "11111111111", sdf.parse("10/04/1982"));
-		Paciente pac2 = new Paciente(null, "Marcos Silva", "marcos@gmail.com", "22222222222", sdf.parse("23/08/1994"));
+		Paciente pac1 = new Paciente(null, "Carla Mello", "carla@gmail.com", "11111111111", sdf.parse("10/04/1982"), end1);
+		Paciente pac2 = new Paciente(null, "Marcos Silva", "marcos@gmail.com", "22222222222", sdf.parse("23/08/1994"), end2);
+		Paciente pac3 = new Paciente(null, "Lidia Pereira", "lidia@gmail.com", "44444444444", sdf.parse("18/01/1974"), end2);
 		
-		pac1.getEnderecos().add(end1);
-		pac2.getEnderecos().add(end2);
 		
 		pac1.getTelefones().add("222222222");
 		pac2.getTelefones().addAll(Arrays.asList("333333333", "444444444"));
+		pac3.getTelefones().add("333333333");
 		
-		pacienteRepository.saveAll(Arrays.asList(pac1, pac2));			
+		pacienteRepository.saveAll(Arrays.asList(pac1, pac2, pac3));			
 		
 		Psicologo psi1 = new Psicologo(null, "Magda Cunha", "magda@gmail.com", "33333333333", "07/0721");
-		psi1.getEnderecos().addAll(Arrays.asList(end3, end4));
+		psi1.getEnderecosDeAtendimento().addAll(Arrays.asList(end3, end4));
 		
 		psicologoRepository.saveAll(Arrays.asList(psi1));
 		
 		Despesa desp1 = new Despesa(null, TipoDespesa.AUGUELSALA, 20.00, sdf.parse("20/05/2019"));
 		Despesa desp2 = new Despesa(null, TipoDespesa.TRANSPORTE, 15.00, sdf.parse("20/05/2019"));
 		Despesa desp3 = new Despesa(null, TipoDespesa.OUTRAS, 50.00, sdf.parse("22/05/2019"));
+		Despesa desp4 = new Despesa(null, TipoDespesa.ENERGIAELETRICA, 100.00, sdf.parse("28/06/2019"));
 		
-		despesaRepository.saveAll(Arrays.asList(desp1, desp2, desp3));
+		despesaRepository.saveAll(Arrays.asList(desp1, desp2, desp3, desp4));
 		
 		SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		
-		Atendimento ated1 = new Atendimento(null, sdf1.parse("20/05/2019 10:30"), "Sessão iniciada com sucesso", 80.00, psi1, pac1, end4);
-		Atendimento ated2 = new Atendimento(null, sdf1.parse("21/05/2019 15:45"), "Promessa de ascenção", 120.00, psi1, pac1, end3);
-		Atendimento ated3 = new Atendimento(null, sdf1.parse("22/05/2019 09:10"), "Comprometimento e responsabilidade", 230.00, psi1, pac2, end4);
+		Atendimento atend1 = new Atendimento(null, sdf1.parse("20/05/2019 10:30"), "Sessão iniciada com sucesso", 80.00, psi1, pac1, end4);
+		Atendimento atend2 = new Atendimento(null, sdf1.parse("21/05/2019 15:45"), "Promessa de ascenção", 120.00, psi1, pac1, end3);
+		Atendimento atend3 = new Atendimento(null, sdf1.parse("22/05/2019 09:10"), "Comprometimento e responsabilidade", 230.00, psi1, pac2, end4);
+		Atendimento atend4 = new Atendimento(null, sdf1.parse("23/08/2019 11:15"), "Verdades expostas", 500.00, psi1, pac3, end4);
 		
-		ated1.getDespesas().addAll(Arrays.asList(desp1, desp2));
-		ated3.getDespesas().addAll(Arrays.asList(desp3));
+		atend1.getDespesas().addAll(Arrays.asList(desp1, desp2));
+		atend3.getDespesas().addAll(Arrays.asList(desp3));
+		atend4.getDespesas().add(desp4);
 		
-		atendimentoRepository.saveAll(Arrays.asList(ated1, ated2, ated3));			
+		atendimentoRepository.saveAll(Arrays.asList(atend1, atend2, atend3, atend4));			
 		
 	}
 }

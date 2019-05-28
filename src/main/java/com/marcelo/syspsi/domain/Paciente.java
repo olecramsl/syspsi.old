@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -19,12 +21,17 @@ public class Paciente extends Pessoa {
 	@OneToMany(mappedBy = "paciente")	
 	List<Atendimento> consultas = new ArrayList<>();
 	
+	@ManyToOne
+	@JoinColumn(name = "endereco_id")
+	private Endereco endereco;	
+
 	public Paciente() {		
 	}
 
-	public Paciente(Integer id, String nome, String email, String cpf, Date dataNascimento) {
+	public Paciente(Integer id, String nome, String email, String cpf, Date dataNascimento, Endereco endereco) {
 		super(id, nome, email, cpf);
-		this.dataNascimento = dataNascimento;		
+		this.dataNascimento = dataNascimento;
+		this.endereco = endereco;
 	}	
 
 	public Date getDataNascimento() {
@@ -41,6 +48,14 @@ public class Paciente extends Pessoa {
 
 	public void setConsultas(List<Atendimento> consultas) {
 		this.consultas = consultas;
+	}
+	
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
 		
 }
