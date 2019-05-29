@@ -18,7 +18,7 @@ public class DespesaResource {
 	private DespesaService service;
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
+	public ResponseEntity<Despesa> find(@PathVariable Integer id) {
 		Despesa obj = service.buscar(id);
 				
 		return ResponseEntity.ok().body(obj);

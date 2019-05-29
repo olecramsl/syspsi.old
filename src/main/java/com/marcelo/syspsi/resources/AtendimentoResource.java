@@ -18,7 +18,7 @@ public class AtendimentoResource {
 	private AtendimentoService service;
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
+	public ResponseEntity<Atendimento> find(@PathVariable Integer id) {
 		Atendimento obj = service.buscar(id);
 				
 		return ResponseEntity.ok().body(obj);
