@@ -16,7 +16,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Atendimento implements Serializable {		
@@ -33,8 +32,7 @@ public class Atendimento implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "psicologo_id")
 	private Psicologo psicologo;
-	
-	@JsonIgnore
+		
 	@ManyToOne
 	@JoinColumn(name = "paciente_id")
 	private Paciente paciente;

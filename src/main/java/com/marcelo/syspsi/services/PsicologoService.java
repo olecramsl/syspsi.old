@@ -10,32 +10,31 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
-import com.marcelo.syspsi.domain.Paciente;
-import com.marcelo.syspsi.domain.dto.PacienteDTO;
-import com.marcelo.syspsi.repositories.PacienteRepository;
+import com.marcelo.syspsi.domain.Psicologo;
+import com.marcelo.syspsi.domain.dto.PsicologoDTO;
+import com.marcelo.syspsi.repositories.PsicologoRepository;
 import com.marcelo.syspsi.services.exception.DataIntegrityException;
 import com.marcelo.syspsi.services.exception.ObjectNotFoundException;
 
 @Service
-public class PacienteService {
+public class PsicologoService {
 
 	@Autowired
-	private PacienteRepository repo;
+	private PsicologoRepository repo;
 	
-	public Paciente find(Integer id) {
-		Optional<Paciente> obj = repo.findById(id);
-		
+	public Psicologo find(Integer id) {
+		Optional<Psicologo> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id: " + id + ", Tipo: " + Paciente.class.getName()));
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Psicologo.class.getName()));
 	}
-
-	public Paciente insert(Paciente obj) {
+	
+	public Psicologo insert(Psicologo obj) {
 		obj.setId(null);
 		return repo.save(obj);
 	}
 
-	public Paciente update(Paciente obj) {
-		find(obj.getId());		
+	public Psicologo update(Psicologo obj) {
+		find(obj.getId());
 		return repo.save(obj);
 	}
 	
@@ -44,21 +43,23 @@ public class PacienteService {
 		try {
 			repo.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Não é possível excluir o paciente, pois ele está associado a outra tabela.");
+			throw new DataIntegrityException("Não é possível excluir o psicologo, pois ele está associado a outra tabela.");
 		}
 	}
 
-	public List<Paciente> findAll() {		
+	public List<Psicologo> findAll() {		
 		return repo.findAll();
 	}
 	
-	public Page<Paciente> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+	public Page<Psicologo> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);		
 		return repo.findAll(pageRequest);
 	}
 
-	public Paciente fromDTO(PacienteDTO objDTO) {		
-		return new Paciente(null, objDTO.getNome(), objDTO.getEmail(), objDTO.getCpf(), 
-				objDTO.getDataNascimento(), objDTO.getEndereco());
+	public Psicologo fromDTO(PsicologoDTO objDTO) {		
+		Psicologo obj = new Psicologo(objDTO.getId(), objDTO.getNome(), objDTO.getEmail(), objDTO.getCpf(), objDTO.getCrp());
+		obj.setEnderecosDeAtendimento(objDTO.getEnderecosDeAtendimento());
+		
+		return obj;
 	}
 }

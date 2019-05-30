@@ -17,38 +17,41 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.marcelo.syspsi.domain.Paciente;
-import com.marcelo.syspsi.domain.dto.PacienteDTO;
-import com.marcelo.syspsi.services.PacienteService;
+import com.marcelo.syspsi.domain.Endereco;
+import com.marcelo.syspsi.domain.dto.EnderecoDTO;
+import com.marcelo.syspsi.services.EnderecoService;
 
 @RestController
-@RequestMapping(value="/pacientes")
-public class PacienteResource {
+@RequestMapping(value="/enderecos")
+public class EnderecoResource {
 
 	@Autowired
-	private PacienteService service;
+	private EnderecoService service;
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<PacienteDTO> find(@PathVariable Integer id) {		
-		PacienteDTO objDTO = new PacienteDTO(service.find(id));				
+	public ResponseEntity<EnderecoDTO> find(@PathVariable Integer id) {
+		EnderecoDTO objDTO = new EnderecoDTO(service.find(id));
+				
 		return ResponseEntity.ok().body(objDTO);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody PacienteDTO objDTO) {
-		Paciente obj = service.fromDTO(objDTO);
+	public ResponseEntity<Void> insert(@Valid @RequestBody EnderecoDTO objDTO) {
+		Endereco obj = service.fromDTO(objDTO);
 		obj.setId(null);
-		obj = service.insert(obj);				
+		obj = service.insert(obj);
+				
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
-	public ResponseEntity<Void> update(@Valid @RequestBody PacienteDTO objDTO, @PathVariable Integer id) {
-		Paciente obj = service.fromDTO(objDTO);		
+	public ResponseEntity<Void> update(@Valid @RequestBody EnderecoDTO objDTO, @PathVariable Integer id) {
+		Endereco obj = service.fromDTO(objDTO);
 		obj.setId(id);
-		obj = service.update(obj);				
+		obj = service.update(obj);
+				
 		return ResponseEntity.noContent().build();
 	}
 	
@@ -60,20 +63,20 @@ public class PacienteResource {
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<PacienteDTO>> findAll() {
-		List<Paciente> list = service.findAll();
-		List<PacienteDTO> listDTO = list.stream().map(obj -> new PacienteDTO(obj)).collect(Collectors.toList());
+	public ResponseEntity<List<EnderecoDTO>> findAll() {
+		List<Endereco> list = service.findAll();
+		List<EnderecoDTO> listDTO = list.stream().map(obj -> new EnderecoDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
 	}
 	
 	@RequestMapping(value = "/page", method=RequestMethod.GET)
-	public ResponseEntity<Page<PacienteDTO>> findPage(
+	public ResponseEntity<Page<EnderecoDTO>> findPage(
 			@RequestParam(value = "page", defaultValue = "0") Integer page, 
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage, 
-			@RequestParam(value = "orderBy", defaultValue = "nome") String orderBy, 
+			@RequestParam(value = "orderBy", defaultValue = "id") String orderBy, 
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
-		Page <Paciente> list = service.findPage(page, linesPerPage, orderBy, direction);
-		Page<PacienteDTO> listDTO = list.map(obj -> new PacienteDTO(obj));
+		Page <Endereco> list = service.findPage(page, linesPerPage, orderBy, direction);
+		Page<EnderecoDTO> listDTO = list.map(obj -> new EnderecoDTO(obj));
 		return ResponseEntity.ok().body(listDTO);
 	}
 }

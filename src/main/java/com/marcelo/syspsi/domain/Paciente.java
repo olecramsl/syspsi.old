@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Paciente extends Pessoa {
@@ -18,6 +19,7 @@ public class Paciente extends Pessoa {
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataNascimento;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "paciente")	
 	private List<Atendimento> consultas = new ArrayList<>();
 	

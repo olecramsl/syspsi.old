@@ -66,6 +66,7 @@ public class SyspsiApplication implements CommandLineRunner {
 		
 		Psicologo psi1 = new Psicologo(null, "Magda Cunha", "magda@gmail.com", "33333333333", "07/0721");
 		psi1.getEnderecosDeAtendimento().addAll(Arrays.asList(end3, end4));
+		psi1.getTelefones().add("111111111");
 		
 		psicologoRepository.saveAll(Arrays.asList(psi1));
 		

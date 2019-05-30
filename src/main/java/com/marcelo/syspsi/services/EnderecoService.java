@@ -10,32 +10,31 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
-import com.marcelo.syspsi.domain.Paciente;
-import com.marcelo.syspsi.domain.dto.PacienteDTO;
-import com.marcelo.syspsi.repositories.PacienteRepository;
+import com.marcelo.syspsi.domain.Endereco;
+import com.marcelo.syspsi.domain.dto.EnderecoDTO;
+import com.marcelo.syspsi.repositories.EnderecoRepository;
 import com.marcelo.syspsi.services.exception.DataIntegrityException;
 import com.marcelo.syspsi.services.exception.ObjectNotFoundException;
 
 @Service
-public class PacienteService {
+public class EnderecoService {
 
 	@Autowired
-	private PacienteRepository repo;
+	private EnderecoRepository repo;
 	
-	public Paciente find(Integer id) {
-		Optional<Paciente> obj = repo.findById(id);
-		
+	public Endereco find(Integer id) {
+		Optional<Endereco> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id: " + id + ", Tipo: " + Paciente.class.getName()));
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Endereco.class.getName()));
 	}
 
-	public Paciente insert(Paciente obj) {
+	public Endereco insert(Endereco obj) {
 		obj.setId(null);
 		return repo.save(obj);
 	}
 
-	public Paciente update(Paciente obj) {
-		find(obj.getId());		
+	public Endereco update(Endereco obj) {
+		find(obj.getId());
 		return repo.save(obj);
 	}
 	
@@ -44,21 +43,21 @@ public class PacienteService {
 		try {
 			repo.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Não é possível excluir o paciente, pois ele está associado a outra tabela.");
+			throw new DataIntegrityException("Não é possível excluir o endereco, pois ele está associado a uma pessoa.");
 		}
 	}
 
-	public List<Paciente> findAll() {		
+	public List<Endereco> findAll() {		
 		return repo.findAll();
 	}
 	
-	public Page<Paciente> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+	public Page<Endereco> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);		
 		return repo.findAll(pageRequest);
 	}
 
-	public Paciente fromDTO(PacienteDTO objDTO) {		
-		return new Paciente(null, objDTO.getNome(), objDTO.getEmail(), objDTO.getCpf(), 
-				objDTO.getDataNascimento(), objDTO.getEndereco());
-	}
+	public Endereco fromDTO(EnderecoDTO objDTO) {		
+		return new Endereco(objDTO.getId(), objDTO.getLogradouro(), objDTO.getNumero(), objDTO.getComplemento(), 
+				objDTO.getBairro(), objDTO.getCep(), objDTO.getCidade(), objDTO.getEstado());
+	}	
 }

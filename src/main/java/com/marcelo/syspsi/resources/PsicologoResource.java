@@ -17,38 +17,41 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.marcelo.syspsi.domain.Paciente;
-import com.marcelo.syspsi.domain.dto.PacienteDTO;
-import com.marcelo.syspsi.services.PacienteService;
+import com.marcelo.syspsi.domain.Psicologo;
+import com.marcelo.syspsi.domain.dto.PsicologoDTO;
+import com.marcelo.syspsi.services.PsicologoService;
 
 @RestController
-@RequestMapping(value="/pacientes")
-public class PacienteResource {
+@RequestMapping(value="/psicologos")
+public class PsicologoResource {
 
 	@Autowired
-	private PacienteService service;
+	private PsicologoService service;
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<PacienteDTO> find(@PathVariable Integer id) {		
-		PacienteDTO objDTO = new PacienteDTO(service.find(id));				
+	public ResponseEntity<PsicologoDTO> find(@PathVariable Integer id) {		
+		PsicologoDTO objDTO = new PsicologoDTO(service.find(id));
+				
 		return ResponseEntity.ok().body(objDTO);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody PacienteDTO objDTO) {
-		Paciente obj = service.fromDTO(objDTO);
+	public ResponseEntity<Void> insert(@Valid @RequestBody PsicologoDTO objDTO) {
+		Psicologo obj = service.fromDTO(objDTO);
 		obj.setId(null);
-		obj = service.insert(obj);				
+		obj = service.insert(obj);
+				
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
-	public ResponseEntity<Void> update(@Valid @RequestBody PacienteDTO objDTO, @PathVariable Integer id) {
-		Paciente obj = service.fromDTO(objDTO);		
+	public ResponseEntity<Void> update(@Valid @RequestBody PsicologoDTO objDTO, @PathVariable Integer id) {
+		Psicologo obj = service.fromDTO(objDTO);
 		obj.setId(id);
-		obj = service.update(obj);				
+		obj = service.update(obj);
+				
 		return ResponseEntity.noContent().build();
 	}
 	
@@ -60,20 +63,20 @@ public class PacienteResource {
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<PacienteDTO>> findAll() {
-		List<Paciente> list = service.findAll();
-		List<PacienteDTO> listDTO = list.stream().map(obj -> new PacienteDTO(obj)).collect(Collectors.toList());
+	public ResponseEntity<List<PsicologoDTO>> findAll() {
+		List<Psicologo> list = service.findAll();
+		List<PsicologoDTO> listDTO = list.stream().map(obj -> new PsicologoDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
 	}
 	
 	@RequestMapping(value = "/page", method=RequestMethod.GET)
-	public ResponseEntity<Page<PacienteDTO>> findPage(
+	public ResponseEntity<Page<PsicologoDTO>> findPage(
 			@RequestParam(value = "page", defaultValue = "0") Integer page, 
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage, 
 			@RequestParam(value = "orderBy", defaultValue = "nome") String orderBy, 
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
-		Page <Paciente> list = service.findPage(page, linesPerPage, orderBy, direction);
-		Page<PacienteDTO> listDTO = list.map(obj -> new PacienteDTO(obj));
+		Page <Psicologo> list = service.findPage(page, linesPerPage, orderBy, direction);
+		Page<PsicologoDTO> listDTO = list.map(obj -> new PsicologoDTO(obj));
 		return ResponseEntity.ok().body(listDTO);
 	}
 }
