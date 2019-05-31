@@ -3,6 +3,8 @@ package com.marcelo.syspsi.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -29,6 +31,7 @@ public class PacienteService {
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Paciente.class.getName()));
 	}
 
+	@Transactional
 	public Paciente insert(Paciente obj) {
 		obj.setId(null);
 		return repo.save(obj);

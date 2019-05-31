@@ -3,6 +3,7 @@ package com.marcelo.syspsi.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ public class AtendimentoService {
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Atendimento.class.getName()));
 	}
 	
+	@Transactional
 	public Atendimento insert(Atendimento obj) {
 		obj.setId(null);
 		return repo.save(obj);
