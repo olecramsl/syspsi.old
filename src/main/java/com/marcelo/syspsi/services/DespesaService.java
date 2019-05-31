@@ -34,10 +34,11 @@ public class DespesaService {
 	}
 
 	public Despesa update(Despesa obj) {
-		find(obj.getId());
-		return repo.save(obj);
-	}
-	
+		Despesa newObj = find(obj.getId());
+		updateData(newObj, obj);
+		return repo.save(newObj);
+	}	
+
 	public void delete(Integer id) {
 		find(id);
 		try {
@@ -60,5 +61,9 @@ public class DespesaService {
 		return new Despesa(objDTO.getId(), objDTO.getTipo(), objDTO.getValor(), objDTO.getData());
 	}
 	
-	
+	private void updateData(Despesa newObj, Despesa obj) {		
+		newObj.setTipo(obj.getTipo());
+		newObj.setValor(obj.getValor());
+		newObj.setData(obj.getData());		
+	}
 }

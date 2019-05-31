@@ -34,7 +34,8 @@ public class PsicologoService {
 	}
 
 	public Psicologo update(Psicologo obj) {
-		find(obj.getId());
+		Psicologo newObj = find(obj.getId());
+		updateData(newObj, obj);
 		return repo.save(obj);
 	}
 	
@@ -61,5 +62,14 @@ public class PsicologoService {
 		obj.setEnderecosDeAtendimento(objDTO.getEnderecosDeAtendimento());
 		
 		return obj;
+	}
+	
+	private void updateData(Psicologo newObj, Psicologo obj) {
+		newObj.setNome(obj.getNome());				
+		newObj.setEmail(obj.getEmail());				
+		newObj.setCpf(obj.getCpf());		
+		newObj.setCrp(obj.getCrp());
+		newObj.setEnderecosDeAtendimento(obj.getEnderecosDeAtendimento());
+		newObj.setTelefones(obj.getTelefones());
 	}
 }

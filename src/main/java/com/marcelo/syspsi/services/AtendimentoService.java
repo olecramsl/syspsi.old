@@ -36,10 +36,11 @@ public class AtendimentoService {
 	}
 
 	public Atendimento update(Atendimento obj) {
-		find(obj.getId());
-		return repo.save(obj);
-	}
-	
+		Atendimento newObj = find(obj.getId());
+		updateData(newObj, obj);
+		return repo.save(newObj);
+	}	
+
 	public void delete(Integer id) {
 		find(id);
 		try {
@@ -62,4 +63,14 @@ public class AtendimentoService {
 		return new Atendimento(objDTO.getId(), objDTO.getData(), objDTO.getProntuario(), objDTO.getValor(), 
 				objDTO.getPsicologo(), objDTO.getPaciente(), objDTO.getEnderecoDoAtendimento());
 	}	
+	
+	private void updateData(Atendimento newObj, Atendimento obj) {		
+		newObj.setData(obj.getData());
+		newObj.setProntuario(obj.getProntuario());	
+		newObj.setValor(obj.getValor());	
+		newObj.setPsicologo(obj.getPsicologo());			
+		newObj.setPaciente(obj.getPaciente());		
+		newObj.setEnderecoDoAtendimento(obj.getEnderecoDoAtendimento());		
+		newObj.setDespesas(obj.getDespesas());
+	}
 }

@@ -22,7 +22,7 @@ public class PacienteDTO implements Serializable {
 	private Integer id;
 	
 	@NotEmpty(message = "Preenchimento obrigatório")
-	@Length(max = 80, message = "O tamanho não pode ser maior que 80 caracteres.")
+	@Length(max = 120, message = "O tamanho não pode ser maior que 120 caracteres.")
 	private String nome;
 	
 	@Email(message = "O endereço de e-mail informado é inválido.")

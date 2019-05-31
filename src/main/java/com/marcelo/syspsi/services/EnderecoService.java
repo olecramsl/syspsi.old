@@ -34,10 +34,11 @@ public class EnderecoService {
 	}
 
 	public Endereco update(Endereco obj) {
-		find(obj.getId());
-		return repo.save(obj);
-	}
-	
+		Endereco newObj = find(obj.getId());
+		updateData(newObj, obj);
+		return repo.save(newObj);
+	}		
+
 	public void delete(Integer id) {
 		find(id);
 		try {
@@ -60,4 +61,14 @@ public class EnderecoService {
 		return new Endereco(objDTO.getId(), objDTO.getLogradouro(), objDTO.getNumero(), objDTO.getComplemento(), 
 				objDTO.getBairro(), objDTO.getCep(), objDTO.getCidade(), objDTO.getEstado());
 	}	
+	
+	private void updateData(Endereco newObj, Endereco obj) {
+		newObj.setLogradouro(obj.getLogradouro());		
+		newObj.setNumero(obj.getNumero());
+		newObj.setComplemento(obj.getComplemento());		
+		newObj.setBairro(obj.getBairro());
+		newObj.setCep(obj.getCep());
+		newObj.setCidade(obj.getCidade());		
+		newObj.setEstado(obj.getEstado());		
+	}
 }
